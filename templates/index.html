@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mascotas Perdidas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐾 Mascotas Perdidas</h1>
+            <p>Sistema de registro y búsqueda de mascotas perdidas</p>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="actions">
+            <a href="{{ url_for('crear') }}" class="btn btn-primary">➕ Registrar Mascota Perdida</a>
+        </div>
+
+        <div class="mascotas-grid">
+            {% if mascotas %}
+                {% for mascota in mascotas %}
+                <div class="mascota-card">
+                    <div class="mascota-header">
+                        <h3>{{ mascota.nombre }}</h3>
+                        <span class="badge">{{ mascota.tipo }}</span>
+                    </div>
+                    <div class="mascota-info">
+                        <p><strong>Raza:</strong> {{ mascota.raza or 'No especificada' }}</p>
+                        <p><strong>Color:</strong> {{ mascota.color }}</p>
+                        <p><strong>Ubicación:</strong> {{ mascota.ubicacion }}</p>
+                        <p><strong>Fecha perdida:</strong> {{ mascota.fecha_perdida }}</p>
+                        <p><strong>Contacto:</strong> {{ mascota.contacto }}</p>
+                        <p><strong>Teléfono:</strong> {{ mascota.telefono }}</p>
+                    </div>
+                    <div class="mascota-actions">
+                        <a href="{{ url_for('ver', id=mascota.id) }}" class="btn btn-info">Ver</a>
+                        <a href="{{ url_for('editar', id=mascota.id) }}" class="btn btn-warning">Editar</a>
+                        <a href="{{ url_for('eliminar', id=mascota.id) }}" 
+                           class="btn btn-danger" 
+                           onclick="return confirm('¿Estás seguro de eliminar esta mascota?')">Eliminar</a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <p>No hay mascotas registradas aún</p>
+                    <a href="{{ url_for('crear') }}" class="btn btn-primary">Registrar la primera mascota</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
