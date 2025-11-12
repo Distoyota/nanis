@@ -88,6 +88,8 @@
             height: calc(2 * 48px);
             animation: fade-in forwards 1s;
             transition: 0.5s;
+            /* aseguramos que el contenedor del perro no recorte internamente */
+            overflow: visible;
         }
         @keyframes fade-in {
             0% { opacity: 0; }
@@ -130,26 +132,25 @@
             height: calc(2 * 8px);
             transition: 0.15s;
         }
+        /* CORRECCIÓN: body-wrapper debe permitir que la cabeza sobresalga */
         .body-wrapper {
             position: absolute;
             width: calc(2 * 48px);
             height: calc(2 * 48px);
-            overflow: hidden; /* ✅ antes decía hidden */
+            overflow: visible; /* permitir que partes (cabeza) sobresalgan */
             z-index: 1;
         }
+        /* CORRECCIÓN: head-wrapper encima del body y sin recorte */
         .head-wrapper {
             position: absolute;
             top: 6px;
             left: 16px;
             width: calc(2 * 31px);
             height: calc(2 * 32px);
-            overflow: hidden; /* ✅ antes decía hidden */
-            z-index: 2; /* ✅ asegúrate de que esté encima del cuerpo */
+            overflow: visible; /* permitir que la animación de la cabeza no sea recortada */
+            z-index: 3; /* encima del cuerpo */
         }
         
-        .body-wrapper, .head-wrapper {
-            z-index: 1;
-        }
         .walk-1 {
             animation: infinite 0.4s walking;
             animation-delay: 0;
@@ -168,14 +169,6 @@
         @keyframes wag {
             0%, 100% { transform: translateX(-2px); }
             50% { transform: translateX(2px); }
-        }
-        .head-wrapper {
-            position: absolute;
-            top: 6px;
-            left: 16px;
-            width: calc(2 * 31px);
-            height: calc(2 * 32px);
-            overflow: hidden;
         }
         .flip {
             transform: scale(-1, 1);
