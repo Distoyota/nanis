@@ -134,8 +134,19 @@
             position: absolute;
             width: calc(2 * 48px);
             height: calc(2 * 48px);
-            overflow: hidden;
+            overflow: visible; /* ✅ antes decía hidden */
+            z-index: 1;
         }
+        .head-wrapper {
+            position: absolute;
+            top: 6px;
+            left: 16px;
+            width: calc(2 * 31px);
+            height: calc(2 * 32px);
+            overflow: visible; /* ✅ antes decía hidden */
+            z-index: 2; /* ✅ asegúrate de que esté encima del cuerpo */
+        }
+        
         .body-wrapper, .head-wrapper {
             z-index: 1;
         }
