@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles - {{ reporte.mascota.nombre }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Detalles del Reporte</h1>
+        </header>
+
+        <div class="detalle-container">
+            <div class="detalle-header">
+                <h2>{{ reporte.mascota.nombre }}</h2>
+                <span class="badge-large">{{ reporte.mascota.tipo }}</span>
+            </div>
+
+            <!-- SECCIÓN: DATOS DE LA MASCOTA -->
+            <div class="seccion-detalle">
+                <h3 class="seccion-titulo">🐾 Información de la Mascota</h3>
+                <div class="detalle-grid">
+                    <div class="detalle-item">
+                        <strong>Nombre:</strong>
+                        <span>{{ reporte.mascota.nombre }}</span>
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Tipo:</strong>
+                        <span>{{ reporte.mascota.tipo }}</span>
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Raza:</strong>
+                        <span>{{ reporte.mascota.raza or 'No especificada' }}</span>
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Color:</strong>
+                        <span>{{ reporte.mascota.color }}</span>
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Edad:</strong>
+                        <span>{{ reporte.mascota.edad or 'No especificada' }} {% if reporte.mascota.edad %}años{% endif %}</span>
+                    </div>
+                    {% if reporte.mascota.descripcion %}
+                    <div class="detalle-item full-width">
+                        <strong>Descripción / Características:</strong>
+                        <p>{{ reporte.mascota.descripcion }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- SECCIÓN: DATOS DEL PROPIETARIO -->
+            {% if reporte.propietario %}
+            <div class="seccion-detalle">
+                <h3 class="seccion-titulo">👤 Información del Propietario</h3>
+                <div class="detalle-grid">
+                    <div class="detalle-item">
+                        <strong>Identificación:</strong>
+                        <span>{{ reporte.propietario.identificacion }}</span>
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Nombre completo:</strong>
+                        <span>{{ reporte.propietario.nombre }} {{ reporte.propietario.apellido }}</span>
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Teléfono:</strong>
+                        <span>{{ reporte.propietario.telefono }}</span>
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Email:</strong>
+                        <span>{{ reporte.propietario.email or 'No especificado' }}</span>
+                    </div>
+                    {% if reporte.ciudad_propietario %}
+                    <div class="detalle-item">
+                        <strong>Ciudad de residencia:</strong>
+                        <span>{{ reporte.ciudad_propietario.nombre }}, {{ reporte.ciudad_propietario.departamento }}</span>
+                    </div>
+                    {% endif %}
+                    {% if reporte.propietario.direccion %}
+                    <div class="detalle-item">
+                        <strong>Dirección:</strong>
+                        <span>{{ reporte.propietario.direccion }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- SECCIÓN: INFORMACIÓN DE LA PÉRDIDA -->
+            <div class="seccion-detalle">
+                <h3 class="seccion-titulo">📍 Información de la Pérdida</h3>
+                <div class="detalle-grid">
+                    {% if reporte.fecha %}
+                    <div class="detalle-item">
+                        <strong>Fecha de pérdida:</strong>
+                        <span>{{ reporte.fecha.fecha }} ({{ reporte.fecha.dia_semana }})</span>
+                    </div>
+                    {% endif %}
+                    {% if reporte.ciudad_perdida %}
+                    <div class="detalle-item">
+                        <strong>Ciudad:</strong>
+                        <span>{{ reporte.ciudad_perdida.nombre }}, {{ reporte.ciudad_perdida.departamento }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="detalle-item full-width">
+                        <strong>Ubicación detallada:</strong>
+                        <p>{{ reporte.ubicacion_detallada }}</p>
+                    </div>
+                    <div class="detalle-item">
+                        <strong>Estado:</strong>
+                        <span class="estado-badge estado-{{ reporte.estado }}">{{ reporte.estado }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="{{ url_for('editar', id=reporte.id) }}" class="btn btn-warning">✏️ Editar</a>
+                <a href="{{ url_for('eliminar', id=reporte.id) }}" 
+                   class="btn btn-danger" 
+                   onclick="return confirm('¿Estás seguro de eliminar este reporte?')">🗑️ Eliminar</a>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">← Volver</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

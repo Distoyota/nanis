@@ -1,3 +1,5 @@
+/* static/style.css - Versión Relacional */
+
 * {
     margin: 0;
     padding: 0;
@@ -33,7 +35,7 @@ header p {
     opacity: 0.9;
 }
 
-/* Alertas */
+/* ===== ALERTAS ===== */
 .alert {
     padding: 15px 20px;
     border-radius: 8px;
@@ -53,7 +55,7 @@ header p {
     border: 1px solid #f5c6cb;
 }
 
-/* Botones */
+/* ===== BOTONES ===== */
 .btn {
     display: inline-block;
     padding: 10px 20px;
@@ -113,13 +115,12 @@ header p {
     background-color: #c82333;
 }
 
-/* Acciones principales */
 .actions {
     text-align: center;
     margin-bottom: 30px;
 }
 
-/* Grid de mascotas */
+/* ===== GRID DE MASCOTAS ===== */
 .mascotas-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -188,7 +189,45 @@ header p {
     font-size: 13px;
 }
 
-/* Estado vacío */
+/* ===== ESTADOS ===== */
+.estado-Perdida {
+    color: #dc3545;
+    font-weight: 600;
+}
+
+.estado-Encontrada {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.estado-En.Búsqueda {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+.estado-badge {
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+.estado-badge.estado-Perdida {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.estado-badge.estado-Encontrada {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.estado-badge.estado-En.Búsqueda {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* ===== ESTADO VACÍO ===== */
 .empty-state {
     text-align: center;
     background: white;
@@ -203,14 +242,31 @@ header p {
     margin-bottom: 20px;
 }
 
-/* Formularios */
+/* ===== FORMULARIOS ===== */
 .form-container {
     background: white;
     border-radius: 12px;
     padding: 30px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
+}
+
+/* Secciones del formulario */
+.form-section {
+    margin-bottom: 35px;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+}
+
+.section-title {
+    color: #667eea;
+    font-size: 1.4em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
 }
 
 .form-group {
@@ -224,6 +280,14 @@ header p {
     font-weight: 600;
 }
 
+.form-group small {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+    font-size: 0.85em;
+    font-style: italic;
+}
+
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -233,6 +297,7 @@ header p {
     border-radius: 6px;
     font-size: 15px;
     transition: border-color 0.3s ease;
+    font-family: inherit;
 }
 
 .form-group input:focus,
@@ -240,6 +305,11 @@ header p {
 .form-group textarea:focus {
     outline: none;
     border-color: #667eea;
+}
+
+.form-group input:disabled {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
 }
 
 .form-row {
@@ -259,13 +329,13 @@ header p {
     min-width: 150px;
 }
 
-/* Vista de detalles */
+/* ===== VISTA DE DETALLES ===== */
 .detalle-container {
     background: white;
     border-radius: 12px;
     padding: 30px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -292,17 +362,33 @@ header p {
     font-weight: 600;
 }
 
+/* Secciones de detalle */
+.seccion-detalle {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.seccion-titulo {
+    color: #667eea;
+    font-size: 1.3em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
 .detalle-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    margin-bottom: 30px;
 }
 
 .detalle-item {
     padding: 15px;
-    background: #f8f9fa;
+    background: white;
     border-radius: 8px;
+    border-left: 3px solid #667eea;
 }
 
 .detalle-item.full-width {
@@ -321,11 +407,19 @@ header p {
 .detalle-item span,
 .detalle-item p {
     color: #333;
-    font-size: 1.1em;
+    font-size: 1.05em;
 }
 
-/* Responsive */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 2em;
+    }
+    
     .mascotas-grid {
         grid-template-columns: 1fr;
     }
@@ -338,10 +432,6 @@ header p {
         grid-template-columns: 1fr;
     }
     
-    header h1 {
-        font-size: 2em;
-    }
-    
     .mascota-actions {
         flex-direction: column;
     }
@@ -352,5 +442,23 @@ header p {
     
     .form-actions .btn {
         width: 100%;
+    }
+    
+    .form-container {
+        padding: 20px;
+    }
+    
+    .form-section {
+        padding: 15px;
+    }
+    
+    .detalle-container {
+        padding: 20px;
+    }
+    
+    .detalle-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
     }
 }

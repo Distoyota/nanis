@@ -1,0 +1,24 @@
+python-3.11.0
+```
+
+#### 1.3 `Procfile` (sin extensión)
+```
+web: gunicorn app:app
+```
+
+#### 1.4 Verificar estructura del proyecto
+```
+proyecto_mascotas/
+│
+├── app.py
+├── requirements.txt
+├── runtime.txt
+├── Procfile
+├── templates/
+│   ├── index.html
+│   ├── index_relacional.html
+│   ├── crear_relacional.html
+│   ├── ver_relacional.html
+│   └── editar_relacional.html
+└── static/
+    └── style.css

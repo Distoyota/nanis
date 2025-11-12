@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Mascota Perdida</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Registrar Mascota Perdida</h1>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="form-container">
+            <form method="POST" action="{{ url_for('crear') }}">
+                
+                <!-- SECCIÓN 1: DATOS DEL PROPIETARIO -->
+                <div class="form-section">
+                    <h2 class="section-title">👤 Datos del Propietario</h2>
+                    
+                    <div class="form-group">
+                        <label for="identificacion">Identificación *</label>
+                        <input type="text" id="identificacion" name="identificacion" 
+                               placeholder="Ej: 1234567890" required>
+                        <small>Si ya existe, se asociará a este propietario</small>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nombre_propietario">Nombre *</label>
+                            <input type="text" id="nombre_propietario" name="nombre_propietario" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="apellido_propietario">Apellido *</label>
+                            <input type="text" id="apellido_propietario" name="apellido_propietario" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="telefono_propietario">Teléfono *</label>
+                            <input type="tel" id="telefono_propietario" name="telefono_propietario" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ciudad_propietario">Ciudad de residencia *</label>
+                            <select id="ciudad_propietario" name="ciudad_propietario" required>
+                                <option value="">Selecciona una ciudad...</option>
+                                {% for ciudad in ciudades %}
+                                <option value="{{ ciudad.id }}">{{ ciudad.nombre }} - {{ ciudad.departamento }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="direccion">Dirección</label>
+                            <input type="text" id="direccion" name="direccion">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 2: DATOS DE LA MASCOTA -->
+                <div class="form-section">
+                    <h2 class="section-title">🐾 Datos de la Mascota</h2>
+                    
+                    <div class="form-group">
+                        <label for="nombre_mascota">Nombre de la mascota *</label>
+                        <input type="text" id="nombre_mascota" name="nombre_mascota" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="tipo">Tipo *</label>
+                            <select id="tipo" name="tipo" required>
+                                <option value="">Selecciona...</option>
+                                <option value="Perro">Perro</option>
+                                <option value="Gato">Gato</option>
+                                <option value="Ave">Ave</option>
+                                <option value="Conejo">Conejo</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="raza">Raza</label>
+                            <input type="text" id="raza" name="raza">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="color">Color *</label>
+                            <input type="text" id="color" name="color" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="edad">Edad (años)</label>
+                            <input type="number" id="edad" name="edad" min="0" max="30">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descripcion">Descripción / Características</label>
+                        <textarea id="descripcion" name="descripcion" rows="3" 
+                                  placeholder="Ej: Tiene una mancha blanca en el pecho, collar rojo..."></textarea>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 3: DATOS DE LA PÉRDIDA -->
+                <div class="form-section">
+                    <h2 class="section-title">📍 Información de la Pérdida</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fecha_perdida">Fecha en que se perdió *</label>
+                            <input type="date" id="fecha_perdida" name="fecha_perdida" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ciudad_perdida">Ciudad donde se perdió *</label>
+                            <select id="ciudad_perdida" name="ciudad_perdida" required>
+                                <option value="">Selecciona una ciudad...</option>
+                                {% for ciudad in ciudades %}
+                                <option value="{{ ciudad.id }}">{{ ciudad.nombre }} - {{ ciudad.departamento }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ubicacion_detallada">Ubicación detallada *</label>
+                        <textarea id="ubicacion_detallada" name="ubicacion_detallada" rows="3" required
+                                  placeholder="Ej: Parque El Salitre, cerca de la entrada principal..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">📝 Registrar Reporte</button>
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

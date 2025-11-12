@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mascotas Perdidas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐾 Mascotas Perdidas</h1>
+            <p>Sistema de registro y búsqueda de mascotas perdidas</p>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="actions">
+            <a href="{{ url_for('crear') }}" class="btn btn-primary">➕ Registrar Mascota Perdida</a>
+        </div>
+
+        <div class="mascotas-grid">
+            {% if reportes %}
+                {% for reporte in reportes %}
+                <div class="mascota-card">
+                    <div class="mascota-header">
+                        <h3>{{ reporte.mascota.nombre }}</h3>
+                        <span class="badge">{{ reporte.mascota.tipo }}</span>
+                    </div>
+                    
+                    <div class="mascota-info">
+                        <p><strong>🏷️ Raza:</strong> {{ reporte.mascota.raza or 'No especificada' }}</p>
+                        <p><strong>🎨 Color:</strong> {{ reporte.mascota.color }}</p>
+                        
+                        {% if reporte.propietario %}
+                        <p><strong>👤 Propietario:</strong> {{ reporte.propietario.nombre }} {{ reporte.propietario.apellido }}</p>
+                        <p><strong>📞 Teléfono:</strong> {{ reporte.propietario.telefono }}</p>
+                        {% endif %}
+                        
+                        {% if reporte.ciudad_perdida %}
+                        <p><strong>📍 Ciudad:</strong> {{ reporte.ciudad_perdida.nombre }}</p>
+                        {% endif %}
+                        
+                        {% if reporte.fecha %}
+                        <p><strong>📅 Fecha:</strong> {{ reporte.fecha.fecha }}</p>
+                        {% endif %}
+                        
+                        <p><strong>🚨 Estado:</strong> <span class="estado-{{ reporte.estado }}">{{ reporte.estado }}</span></p>
+                    </div>
+                    
+                    <div class="mascota-actions">
+                        <a href="{{ url_for('ver', id=reporte.id) }}" class="btn btn-info">Ver</a>
+                        <a href="{{ url_for('editar', id=reporte.id) }}" class="btn btn-warning">Editar</a>
+                        <a href="{{ url_for('eliminar', id=reporte.id) }}" 
+                           class="btn btn-danger" 
+                           onclick="return confirm('¿Estás seguro de eliminar este reporte?')">Eliminar</a>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="empty-state">
+                    <p>No hay mascotas registradas aún</p>
+                    <a href="{{ url_for('crear') }}" class="btn btn-primary">Registrar la primera mascota</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
